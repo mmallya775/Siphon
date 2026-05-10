@@ -22,7 +22,7 @@ learn a programming language the fun way.
 Early. Currently implemented:
 
 - [x] Local folder scanning (size + mtime per file, keyed by relative path)
-- [ ] Remote folder scanning over SFTP
+- [ ] Remote folder scanning over SSH
 - [ ] Diff local and remote file lists
 - [ ] Implement oneshot sync of files from local to remote
 - [ ] Implement uptodate mirroring of local and remote
