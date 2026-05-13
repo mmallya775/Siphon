@@ -3,6 +3,7 @@ package cloud.mallya;
 import cloud.mallya.connection.SSHConnection;
 import cloud.mallya.model.FileMeta;
 import cloud.mallya.scan.LocalScanner;
+import cloud.mallya.scan.RemoteScanner;
 import org.apache.sshd.client.session.ClientSession;
 
 import java.nio.file.Path;
@@ -27,15 +28,21 @@ public class Siphon {
                 .build()) {
             ClientSession clientSession = sshConnection.getClientSession();
 
+            RemoteScanner remoteScanner = new RemoteScanner(remoteFolder, clientSession);
+            Map<String, FileMeta> remoteList = remoteScanner.scan();
 
-            for (int i = 0; i < 2; i++) {
-                System.out.println("Iteration: " + i + " user: " + clientSession.getUsername());
-                Thread.sleep(5000);
-            }
+            remoteList.forEach((k,v) -> System.out.println(k + "::" +v));
+//            for (int i = 0; i < 2; i++) {
+//                System.out.println("Iteration: " + i + " user: " + clientSession.getUsername());
+//                Thread.sleep(5000);
+//            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+        System.out.println("===================================");
+        System.out.println("===================================");
+        System.out.println("===================================");
         listOfFiles.forEach((p, m) -> System.out.println(p + "::" + m));
 
 //        listOfFiles.entrySet().stream()

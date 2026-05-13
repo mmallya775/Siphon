@@ -73,7 +73,7 @@ public class SSHConnection implements AutoCloseable {
                     .verify(10, TimeUnit.SECONDS)
                     .getSession();
 
-            this.clientSession.auth();
+            this.clientSession.auth().verify();
 
             System.out.println("Connected as: " + clientSession.getUsername());
             System.out.println(clientSession.getClientVersion());
@@ -94,8 +94,10 @@ public class SSHConnection implements AutoCloseable {
             clientSession.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            sshClient.stop();
         }
-        sshClient.stop();
+
     }
 
     public static Builder builder(String host, String userName) {

@@ -33,7 +33,7 @@ public class LocalScanner {
                         try {
                             String key = localFolderPath.relativize(path).toString();
                             BasicFileAttributes basicFileAttributes = Files.readAttributes(path, BasicFileAttributes.class);
-                            scannedList.put(key, new FileMeta(basicFileAttributes.size(), basicFileAttributes.lastModifiedTime().toMillis()));
+                            scannedList.put(key, new FileMeta(basicFileAttributes.size(), basicFileAttributes.lastModifiedTime().toInstant()));
                         } catch (IOException e) {
                             log.log(Level.WARNING, e, () -> "Failed to fetch file attributes for: " + path);
                         }
