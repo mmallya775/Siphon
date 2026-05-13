@@ -1,8 +1,8 @@
 # Siphon
 
 A CLI for keeping a remote folder in sync with a local one, written in Java.
-This script does two functions when run. Initially it will scan the local folder,  
-then scan the remote folder and filter out files which have the same name, size and
+This script does two functions when run. Initially it will scan the local folder, then scan 
+the remote folder and filter out files which have the same name, size and
 last modified time. Then it will synchronize the remote folder with the local folder.
 In the next stage it will watch the local folder for any changes like creation, deletion, 
 modification, etc. and writes to the remote folder immediately.
@@ -22,7 +22,7 @@ learn a programming language the fun way.
 Early. Currently implemented:
 
 - [x] Local folder scanning (size + mtime per file, keyed by relative path)
-- [ ] Remote folder scanning over SSH
+- [x] Remote folder scanning over SSH
 - [ ] Diff local and remote file lists
 - [ ] Implement oneshot sync of files from local to remote
 - [ ] Implement uptodate mirroring of local and remote
@@ -31,8 +31,6 @@ Early. Currently implemented:
 
 - JDK 25 or later
 - Maven 3.9+
-
-[jep512]: https://openjdk.org/jeps/512
 
 ## Build
 
