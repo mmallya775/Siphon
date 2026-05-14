@@ -5,6 +5,7 @@ import cloud.mallya.diff.FilesDiffing;
 import cloud.mallya.model.FileMeta;
 import cloud.mallya.scan.LocalScanner;
 import cloud.mallya.scan.RemoteScanner;
+import cloud.mallya.scan.Scanner;
 import org.apache.sshd.client.session.ClientSession;
 
 import java.nio.file.Path;
@@ -17,8 +18,8 @@ public class Siphon {
         Path localFolder = Path.of(System.getenv("LOCAL_PATH"));
         Path remoteFolder = Path.of(System.getenv("REMOTE_PATH"));
 
-        LocalScanner localDirectoryUtilities = new LocalScanner(localFolder);
-        Map<String, FileMeta> listOfFiles = localDirectoryUtilities.scan();
+        Scanner localScanner = new LocalScanner(localFolder);
+        Map<String, FileMeta> listOfFiles = localScanner.scan();
 
         try (SSHConnection sshConnection = SSHConnection.builder(System.getenv("HOST"), System.getenv("USER"))
                 .keyPath(Path.of(System.getProperty("user.home"), ".ssh", "id_ed25519"))
@@ -26,7 +27,7 @@ public class Siphon {
                 .build()) {
             ClientSession clientSession = sshConnection.getClientSession();
 
-            RemoteScanner remoteScanner = new RemoteScanner(remoteFolder, clientSession);
+            Scanner remoteScanner = new RemoteScanner(remoteFolder, clientSession);
             Map<String, FileMeta> remoteList = remoteScanner.scan();
 
 

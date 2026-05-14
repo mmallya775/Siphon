@@ -26,7 +26,7 @@ import java.util.stream.Stream;
  * system is also UNIX-based. Not sure if other operating systems can utilize the `find` command.
  */
 
-public class RemoteScanner {
+public class RemoteScanner implements Scanner {
 
     private final Path remoteFolderPath;
     private final ClientSession clientSession;
@@ -38,13 +38,15 @@ public class RemoteScanner {
         this.clientSession = clientSession;
     }
 
+    @Override
     public Map<String, FileMeta> scan() {
         Map<String, FileMeta> scannedList = new HashMap<>();
 
         ByteArrayOutputStream stdout = new ByteArrayOutputStream();
         ByteArrayOutputStream stderr = new ByteArrayOutputStream();
 
-//        String command = "find '" + remoteFolderPath.toString() + "' -type f -printf '%P : %s bytes : %T@ \\n'";
+        // List out all the files and its attributes like size and time of last modification
+        // A tab space is super rare in file names. Use that to separate attributes later via regex
         String command = "find '" + remoteFolderPath + "' -type f -printf '%P\\t%s\\t%T@\\n'";
         Integer exitStatus;
 
@@ -53,6 +55,7 @@ public class RemoteScanner {
             clientChannel.setErr(stderr);
             clientChannel.open().verify(10, TimeUnit.SECONDS);
 
+            // Wait for the channel to close
             clientChannel.waitFor(EnumSet.of(ClientChannelEvent.CLOSED), TimeUnit.SECONDS.toMillis(60));
 
             exitStatus = clientChannel.getExitStatus();
@@ -78,6 +81,8 @@ public class RemoteScanner {
 
                     String relPath = splits[0];
                     long size = Long.parseLong(splits[1]);
+
+                    // TODO check for possible cases where the line is a bit malformed or regex doesnt work correctly
 
                     String[] timeParts = splits[2].split("\\.", 2);
                     long secs = Long.parseLong(timeParts[0]);

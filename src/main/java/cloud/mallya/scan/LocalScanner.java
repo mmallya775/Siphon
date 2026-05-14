@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-public class LocalScanner {
+public class LocalScanner implements Scanner {
 
     private final Path localFolderPath;
     private static final Logger log = Logger.getLogger(LocalScanner.class.getName());
@@ -22,6 +22,7 @@ public class LocalScanner {
         this.localFolderPath = localFolderPath;
     }
 
+    @Override
     public Map<String, FileMeta> scan() {
 
         Map<String, FileMeta> scannedList = new HashMap<>();
