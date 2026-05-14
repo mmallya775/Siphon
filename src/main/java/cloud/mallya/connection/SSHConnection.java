@@ -55,11 +55,6 @@ public class SSHConnection implements AutoCloseable {
                 AcceptAllServerKeyVerifier.INSTANCE,
                 Paths.get(System.getProperty("user.home"), ".ssh", "known_hosts")));
 
-//        CoreModuleProperties.HEARTBEAT_INTERVAL.set(sshClient, Duration.ofSeconds(20));
-//        CoreModuleProperties.HEARTBEAT_NO_REPLY_MAX.set(sshClient, 5);
-//
-//        PropertyResolverUtils.updateProperty(sshClient, CoreModuleProperties.HEARTBEAT_INTERVAL.getName(),10000);
-//        PropertyResolverUtils.updateProperty(sshClient, CoreModuleProperties.HEARTBEAT_NO_REPLY_MAX.getName(),5);
 
         sshClient.setSessionHeartbeat(SessionHeartbeatController.HeartbeatType.IGNORE,
                 Duration.ofSeconds(20));

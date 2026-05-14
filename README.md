@@ -23,7 +23,7 @@ Early. Currently implemented:
 
 - [x] Local folder scanning (size + mtime per file, keyed by relative path)
 - [x] Remote folder scanning over SSH
-- [ ] Diff local and remote file lists
+- [x] Diff local and remote file lists
 - [ ] Implement oneshot sync of files from local to remote
 - [ ] Implement uptodate mirroring of local and remote
  
